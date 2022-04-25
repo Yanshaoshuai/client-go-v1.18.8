@@ -377,6 +377,7 @@ func NewForConfig(c *rest.Config) (*Clientset, error) {
 	}
 	var cs Clientset
 	var err error
+	//从config中获取值设置到各种client中 并且添加一些默认值
 	cs.admissionregistrationV1, err = admissionregistrationv1.NewForConfig(&configShallowCopy)
 	if err != nil {
 		return nil, err

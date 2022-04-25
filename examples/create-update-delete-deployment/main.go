@@ -51,11 +51,12 @@ func main() {
 		kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
 	}
 	flag.Parse()
-
+	//加载配置
 	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
 	if err != nil {
 		panic(err)
 	}
+	//获取client set 客户端
 	clientset, err := kubernetes.NewForConfig(config)
 	if err != nil {
 		panic(err)
