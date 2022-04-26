@@ -65,7 +65,7 @@ func main() {
 	}
 
 	deploymentRes := schema.GroupVersionResource{Group: "apps", Version: "v1", Resource: "deployments"}
-
+	//使用Unstructured无结构约束的类构造deployment
 	deployment := &unstructured.Unstructured{
 		Object: map[string]interface{}{
 			"apiVersion": "apps/v1",

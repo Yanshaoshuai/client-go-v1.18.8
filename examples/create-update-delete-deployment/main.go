@@ -61,9 +61,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
+	//获取deployment的client
 	deploymentsClient := clientset.AppsV1().Deployments(apiv1.NamespaceDefault)
 
+	//构造一个deployment
 	deployment := &appsv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: "demo-deployment",
@@ -123,10 +124,10 @@ func main() {
 	//
 	// More Info:
 	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
-
+	//修改状态并在冲突时重试
 	retryErr := retry.RetryOnConflict(retry.DefaultRetry, func() error {
 		// Retrieve the latest version of Deployment before attempting update
-		// RetryOnConflict uses exponential backoff to avoid exhausting the apiserver
+		// RetryOnConflict uses exponential backoff to avoid exhausting the apiserver 使用指数退避算法防止apiserver繁忙
 		result, getErr := deploymentsClient.Get(context.TODO(), "demo-deployment", metav1.GetOptions{})
 		if getErr != nil {
 			panic(fmt.Errorf("Failed to get latest version of Deployment: %v", getErr))
