@@ -36,6 +36,7 @@ type RateLimiter interface {
 
 // DefaultControllerRateLimiter is a no-arg constructor for a default rate limiter for a workqueue.  It has
 // both overall and per-item rate limiting.  The overall is a token bucket and the per-item is exponential
+//它具有整体和每项元素的速率限制。 整体是一个令牌桶，每个项目是指数级的
 func DefaultControllerRateLimiter() RateLimiter {
 	return NewMaxOfRateLimiter(
 		NewItemExponentialFailureRateLimiter(5*time.Millisecond, 1000*time.Second),
